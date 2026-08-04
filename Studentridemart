@@ -1,0 +1,131 @@
+StudentRideMart/
+├── .github/                          # CI/CD Workflows (GitHub Actions)
+│   ├── workflows/
+│   │   ├── backend-deploy.yml
+│   │   ├── web-deploy.yml
+│   │   └── flutter-build.yml
+├── docs/                             # Project Documentation
+│   ├── api/                          # Swagger/Redoc exports
+│   ├── architecture/                 # Diagrams (Sequence, ERD)
+│   ├── user-stories.md
+│   └── tech-stack.md
+├── database/                         # Database Management
+│   ├── migrations/                   # Sequelize/Knex migrations
+│   ├── seeds/                        # Initial data
+│   ├── schema/                       # ERD images
+│   └── docker-compose.db.yml         # Local PG + Redis setup
+├── backend/                          # Node.js + Express (Monorepo style or separate repo)
+│   ├── src/
+│   │   ├── config/                   # Env vars, DB connection, Cloudinary/Firebase config
+│   │   ├── controllers/              # Request handlers
+│   │   │   ├── auth.controller.js
+│   │   │   ├── ride.controller.js
+│   │   │   ├── vendor.controller.js
+│   │   │   └── admin.controller.js
+│   │   ├── middleware/               # JWT Auth, Role-based access (Student/Driver/Vendor/Admin), Validation
+│   │   │   ├── auth.middleware.js
+│   │   │   ├── role.middleware.js
+│   │   │   └── error.middleware.js
+│   │   ├── models/                   # Mongoose (MongoDB) or Sequelize (PostgreSQL) schemas
+│   │   │   ├── User.js               # Base user (extends to Student, Driver, Vendor)
+│   │   │   ├── Ride.js               # Ride requests, status, route, price
+│   │   │   ├── Vendor.js             # Merchant details, inventory
+│   │   │   ├── Order.js              # Mart orders linked to rides or pickups
+│   │   │   └── Review.js
+│   │   ├── routes/                   # API endpoints
+│   │   │   ├── auth.routes.js
+│   │   │   ├── ride.routes.js
+│   │   │   ├── vendor.routes.js
+│   │   │   └── admin.routes.js
+│   │   ├── services/                 # Business logic (e.g., calculate fare, match driver)
+│   │   │   ├── ride.service.js
+│   │   │   ├── notification.service.js
+│   │   │   └── payment.service.js
+│   │   ├── utils/                    # Helpers (GeoDistance, Emailer, Logger)
+│   │   ├── websocket/                # Socket.io logic for live tracking
+│   │   │   └── index.js
+│   │   └── app.js
+│   ├── tests/                        # Jest/Mocha unit & integration tests
+│   ├── .env.example
+│   ├── package.json
+│   └── Dockerfile
+├── web/                              # Next.js 14 (App Router) - Main Landing & Booking
+│   ├── public/
+│   ├── src/
+│   │   ├── app/                      # Pages
+│   │   │   ├── (auth)/               # Login, Register (Student/Driver/Vendor)
+│   │   │   ├── (dashboard)/          # Student Dashboard, Driver Hub, Vendor Store
+│   │   │   ├── ride/[id]             # Live ride tracking page
+│   │   │   ├── vendor/[slug]         # Vendor storefront
+│   │   │   └── layout.tsx
+│   │   ├── components/               # Reusable UI (Map component, RideCard, VendorCard)
+│   │   ├── lib/                      # API clients, Utilities
+│   │   ├── store/                    # Zustand or Redux (Global state)
+│   │   └── styles/                   # Tailwind CSS globals
+│   ├── next.config.js
+│   ├── tailwind.config.js
+│   └── package.json
+├── admin-dashboard/                  # React/Vite - Super Admin Panel
+│   ├── public/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Dashboard.tsx         # KPIs, Revenue, Active Rides
+│   │   │   ├── Users.tsx             # Manage Students, Drivers, Vendors
+│   │   │   ├── Rides.tsx             # History, Disputes
+│   │   │   ├── Vendors.tsx           # Store management, Inventory
+│   │   │   └── Settings.tsx
+│   │   ├── components/               # Charts, Tables, Modals
+│   │   ├── services/                 # Axios instances
+│   │   └── App.tsx
+│   ├── package.json
+│   └── vite.config.js
+├── mobile-user/                      # Flutter - Student/Customer App
+│   ├── lib/
+│   │   ├── core/                     # Constants, Themes, Utilities
+│   │   ├── data/                     # Models, API Repositories, Local Storage
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   ├── home/                 # Main screen, Quick Book
+│   │   │   ├── ride/                 # Ride booking, Live Map, History
+│   │   │   ├── mart/                 # Browse vendors, Cart, Checkout
+│   │   │   ├── profile/
+│   │   │   └── notifications/
+│   │   ├── widgets/                  # Reusable UI components
+│   │   └── main.dart
+│   ├── assets/                       # Images, Fonts, Icons
+│   ├── pubspec.yaml
+│   └── android/ & ios/
+├── mobile-driver/                    # Flutter - Driver App
+│   ├── lib/
+│   │   ├── core/
+│   │   ├── data/
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   ├── home/                 # Trip Requests, Earnings Overview
+│   │   │   ├── ride/                 # Accept Ride, Navigate, Complete
+│   │   │   ├── profile/
+│   │   │   └── earnings/
+│   │   ├── widgets/
+│   │   └── main.dart
+│   ├── assets/
+│   ├── pubspec.yaml
+│   └── android/ & ios/
+├── mobile-vendor/                    # Flutter - Merchant App
+│   ├── lib/
+│   │   ├── core/
+│   │   ├── data/
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   ├── home/                 # Order Queue, Daily Stats
+│   │   │   ├── product/              # Inventory Management
+│   │   │   ├── order/                # Order details, Status updates
+│   │   │   └── profile/
+│   │   ├── widgets/
+│   │   └── main.dart
+│   ├── assets/
+│   ├── pubspec.yaml
+│   └── android/ & ios/
+├── scripts/                          # Utility scripts (e.g., seed-db.sh, deploy.sh)
+├── docker-compose.yml                # Local environment orchestration
+├── README.md
+└── package.json                      # Root workspaces (if using monorepo)
